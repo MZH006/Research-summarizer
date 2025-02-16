@@ -1,1 +1,2 @@
-'nltk.txt' not found, not downloading any corpora
+echo "punkt" > nltk.txt
+echo "wordnet" >> nltk.txt
