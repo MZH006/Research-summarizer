@@ -1,0 +1,8 @@
+__pycache__/
+.git/
+*.pyc
+*.log
+venv/
+.env
+nltk_data/
+spacy_data/
