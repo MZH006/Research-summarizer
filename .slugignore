@@ -1,1 +1,6 @@
 echo "nltk_data/" >> .slugignore
+myenv/
+node_modules/
+*.log
+*.tmp
+*.sqlite3
