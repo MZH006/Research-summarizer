@@ -1,36 +1,47 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
+import fetchpaper  # Import the fetchpaper module
+import simplify  # Import the simplify module
 
 app = Flask(__name__)
 
-papers = []
+search_results = []
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
 @app.route('/search', methods=['GET'])
 def search_papers():
     query = request.args.get('query', '').lower()
-    results = []
-
-    for paper in papers:
-        if query in paper['title'].lower() or query in paper['abstract'].lower():
-            results.append(paper)
     
-    return render_template('results.html', query=query, results=results)
+    # Fetch articles from ArXiv API based on the query
+    global search_results
+    search_results = fetchpaper.fetch_articles(query)
+    
+    if not search_results:
+        return render_template('results.html', query=query, results=[], message="No articles found.")
+    
+    return render_template('results.html', query=query, results=search_results)
 
 @app.route('/paper/<int:paper_id>', methods=['GET'])
 def view_paper(paper_id):
-    # Find the paper by its ID
-    paper = next((p for p in papers if p["id"] == paper_id), None)
-    
-    if paper is None:
-        return "Paper not found", 404
-    
-    summary = f"This paper discusses the main ideas of {paper['title']}. It focuses on key points such as [insert simplified points here]."
+    print(f"Attempting to view paper with ID: {paper_id}")  # Debugging log
 
-    return render_template('paper.html', paper=paper, summary=summary)
+    # Make sure search_results is defined and has items
+    if not search_results or paper_id < 0 or paper_id >= len(search_results):
+        return "Paper not found", 404  # If index is out of bounds
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    paper = search_results[paper_id]  # Fetch the paper
+    
+    pdf_text = fetchpaper.extract_text_from_pdf(paper.get('pdf_link', ''))
+    
+    if pdf_text:
+        keywords = ['machine learning', 'neural networks', 'AI', 'deep learning']
+        simplified_text = simplify.process_article_text(pdf_text, keywords)
+    else:
+        simplified_text = "Failed to extract text from the selected paper."
+    
+    return render_template('paper.html', paper=paper, simplified_text=simplified_text)
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5001) 

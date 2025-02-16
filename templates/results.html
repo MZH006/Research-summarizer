@@ -1,121 +1,77 @@
-<!-- Updated results.html - Search Results Page with Complementary Theme and Loading Animation -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results - Research Galaxy</title>
+    <title>Search Results for {{ query }}</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
         body {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
+            background: #121212;
+            color: #fff;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1b3c72, #2a5298);
-            color: white;
-            text-align: center;
-            overflow: hidden;
         }
-
         .container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeIn 1.5s ease-in-out forwards;
+            text-align: center;
+            padding: 50px;
+            max-width: 900px;
+            margin: 0 auto;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         h1 {
-            font-size: 32px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 40px;
         }
-
-        .result {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease-in-out;
+        .results-list {
+            list-style-type: none;
+            padding: 0;
         }
-
-        .result:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        .result-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
         }
-
-        .result h3 a {
+        .result-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.6);
+        }
+        .result-item a {
+            color: #ffd700;
+            font-size: 1.4em;
             text-decoration: none;
-            color: #a8e6ff;
+            font-weight: bold;
+            transition: color 0.3s ease;
         }
-
-        .result h3 a:hover {
-            text-shadow: 0 0 10px #a8e6ff;
+        .result-item a:hover {
+            color: #fbc02d;
         }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background: linear-gradient(45deg, #ff00ff, #00d4ff);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-            transition: 0.3s;
-        }
-
-        .back-btn:hover {
-            background: linear-gradient(45deg, #ff0077, #00bbff);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
-        }
-
-        .loading {
-            font-size: 20px;
-            margin-top: 50px;
-            opacity: 0;
-            animation: fadeIn 2s ease-in-out forwards, pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #bbb;
         }
     </style>
 </head>
 <body>
-    <div class="loading">✨ Loading search results... ✨</div>
-
     <div class="container">
-        <h1>🔭 Search Results for "{{ query }}"</h1>
-        
-        {% if results %}
-            {% for paper in results %}
-                <div class="result">
-                    <h3><a href="/paper/{{ paper.id }}">{{ paper.title }}</a></h3>
-                    <p>Author: {{ paper.author }}</p>
-                    <p>{{ paper.abstract }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No research found. Try another search!</p>
-        {% endif %}
-        
-        <a href="/" class="back-btn">🌍 Return to Search</a>
+        <h1>Results for "{{ query }}"</h1>
+        <ul class="results-list">
+            {% if message %}
+                <p>{{ message }}</p>
+            {% else %}
+                {% for result in results %}
+                    <li class="result-item">
+                        <a href="/paper/{{ loop.index0 }}">{{ result.title }}</a> by {{ result.authors|join(', ') }} (Published: {{ result.published }})
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <a href="/" class="back-link">Back to Search</a>
     </div>
 </body>
 </html>
