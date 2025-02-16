@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
-import fetchpaper  # Import the fetchpaper module
-import simplify  # Import the simplify module
-
+import fetchpaper  
+import simplify 
+import os
 app = Flask(__name__)
 
 search_results = []
@@ -14,7 +14,6 @@ def index():
 def search_papers():
     query = request.args.get('query', '').lower()
     
-    # Fetch articles from ArXiv API based on the query
     global search_results
     search_results = fetchpaper.fetch_articles(query)
     
@@ -25,13 +24,13 @@ def search_papers():
 
 @app.route('/paper/<int:paper_id>', methods=['GET'])
 def view_paper(paper_id):
-    print(f"Attempting to view paper with ID: {paper_id}")  # Debugging log
+    print(f"Attempting to view paper with ID: {paper_id}")  
 
-    # Make sure search_results is defined and has items
+
     if not search_results or paper_id < 0 or paper_id >= len(search_results):
-        return "Paper not found", 404  # If index is out of bounds
+        return "Paper not found", 404 
 
-    paper = search_results[paper_id]  # Fetch the paper
+    paper = search_results[paper_id]  
     
     pdf_text = fetchpaper.extract_text_from_pdf(paper.get('pdf_link', ''))
     
@@ -44,4 +43,4 @@ def view_paper(paper_id):
     return render_template('paper.html', paper=paper, simplified_text=simplified_text)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001) 
+    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 5001)))
