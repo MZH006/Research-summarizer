@@ -25,6 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+hackathon_research/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
