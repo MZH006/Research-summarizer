@@ -132,7 +132,7 @@ def interactive_program():
     
     if pdf_text:
         print("\nExtracted Text:")
-        print(pdf_text[:10])  # Display only the first 500 characters of extracted text
+        print(pdf_text[:])  # Display only the first 500 characters of extracted text
     else:
         print("Failed to extract text from PDF.")
 
