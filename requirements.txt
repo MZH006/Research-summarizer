@@ -11,6 +11,7 @@ cycler==0.12.1
 dill==0.3.9
 Flask==3.1.0
 fonttools==4.55.3
+gunicorn==23.0.0
 hypothesis==6.123.11
 idna==3.10
 iniconfig==2.0.0
