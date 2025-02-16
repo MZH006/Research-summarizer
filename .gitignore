@@ -63,7 +63,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
+myenv/
 # Translations
 *.mo
 *.pot
