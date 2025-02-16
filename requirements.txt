@@ -24,6 +24,7 @@ fsspec==2025.2.0
 gast==0.6.0
 google-pasta==0.2.0
 grpcio==1.70.0
+gunicorn==23.0.0
 h5py==3.12.1
 httplib2==0.22.0
 huggingface-hub==0.28.1
@@ -83,6 +84,10 @@ spacy==3.8.4
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 srsly==2.5.1
+tensorboard==2.18.0
+tensorboard-data-server==0.7.2
+tensorflow==2.18.0
+tensorflow-io-gcs-filesystem==0.37.1
 termcolor==2.5.0
 thinc==8.3.4
 tokenizers==0.21.0
