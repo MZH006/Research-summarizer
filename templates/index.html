@@ -1,0 +1,93 @@
+<!-- Updated index.html - Landing Page with Animated Appearance -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Galaxy - Explore Knowledge</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #0d1b2a, #010409);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 750px;
+            padding: 30px;
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(173, 216, 230, 0.5);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            outline: none;
+            border: 1px solid #61dafb;
+            transition: 0.3s;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background: linear-gradient(45deg, #ff00ff, #0088ff);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #ff0077, #00bbff);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Research Galaxy</h1>
+        <p>Explore the universe of knowledge. Enter a topic to find research papers with simplified insights.</p>
+        
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Search the cosmos of research..." required>
+            <button type="submit">Launch Search</button>
+        </form>
+    </div>
+</body>
+</html>
