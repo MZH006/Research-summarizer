@@ -1,7 +1,8 @@
+import os
 from flask import Flask, request, render_template
 import fetchpaper  
 import simplify 
-import os
+
 app = Flask(__name__)
 
 search_results = []
@@ -24,14 +25,10 @@ def search_papers():
 
 @app.route('/paper/<int:paper_id>', methods=['GET'])
 def view_paper(paper_id):
-    print(f"Attempting to view paper with ID: {paper_id}")  
-
-
     if not search_results or paper_id < 0 or paper_id >= len(search_results):
         return "Paper not found", 404 
 
     paper = search_results[paper_id]  
-    
     pdf_text = fetchpaper.extract_text_from_pdf(paper.get('pdf_link', ''))
     
     if pdf_text:
@@ -43,4 +40,5 @@ def view_paper(paper_id):
     return render_template('paper.html', paper=paper, simplified_text=simplified_text)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
