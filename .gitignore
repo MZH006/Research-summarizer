@@ -33,6 +33,8 @@ data/
 .vscode/
 .idea/
 .pytest_cache/
+nltk_data/
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
